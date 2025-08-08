@@ -162,7 +162,7 @@ fn get_zodiac_ascii_art(sign: ZodiacSign) -> &'static str {
      `---'"#,
         ZodiacSign::Virgo => r#"      .-.   .-.
      /   \ /   \
-    | (M) | (V) |
+    | (*) | (*) |
      \   / \   /
       `-'   `-'
       VIRGO"#,
