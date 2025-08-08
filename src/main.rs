@@ -93,7 +93,7 @@ fn generate_lucky_numbers(sign: ZodiacSign) -> Vec<u8> {
     lucky_numbers
 }
 
-fn generate_lucky_colors(sign: ZodiacSign) -> Vec<&'static str> {
+fn generate_lucky_color(sign: ZodiacSign) -> &'static str {
     let mut rng = rand::thread_rng();
     
     let colors = match sign {
@@ -111,18 +111,8 @@ fn generate_lucky_colors(sign: ZodiacSign) -> Vec<&'static str> {
         ZodiacSign::Pisces => vec!["Sea Green", "Lavender", "Aquamarine", "Soft Blue"],
     };
     
-    let mut selected = vec![];
-    let num_colors = rng.gen_range(2..=3);
-    let mut available_colors = colors;
-    
-    for _ in 0..num_colors {
-        if !available_colors.is_empty() {
-            let idx = rng.gen_range(0..available_colors.len());
-            selected.push(available_colors.remove(idx));
-        }
-    }
-    
-    selected
+    let idx = rng.gen_range(0..colors.len());
+    colors[idx]
 }
 
 fn get_zodiac_ascii_art(sign: ZodiacSign) -> &'static str {
@@ -316,7 +306,7 @@ fn main() {
     let zodiac_sign = determine_zodiac_sign(birth_date);
     let horoscope = generate_horoscope(zodiac_sign);
     let lucky_numbers = generate_lucky_numbers(zodiac_sign);
-    let lucky_colors = generate_lucky_colors(zodiac_sign);
+    let lucky_color = generate_lucky_color(zodiac_sign);
     let ascii_art = get_zodiac_ascii_art(zodiac_sign);
     
     println!("🌟 Tomorrow's Horoscope for {} 🌟", zodiac_sign);
@@ -328,7 +318,7 @@ fn main() {
     println!();
     println!("🍀 LUCKY NUMBERS: {}", 
         lucky_numbers.iter().map(|n| n.to_string()).collect::<Vec<_>>().join(", "));
-    println!("🌈 LUCKY COLORS: {}", lucky_colors.join(", "));
+    println!("🌈 LUCKY COLOR: {}", lucky_color);
     println!();
     println!("✨ May the stars guide your path! ✨");
 }
