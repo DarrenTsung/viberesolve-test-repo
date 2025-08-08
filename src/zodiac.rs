@@ -1,4 +1,5 @@
 use chrono::{NaiveDate, Datelike};
+use rand::Rng;
 use std::fmt;
 
 #[derive(Debug, Clone, Copy)]
@@ -56,3 +57,62 @@ pub fn determine_zodiac_sign(birth_date: NaiveDate) -> ZodiacSign {
         _ => unreachable!("Invalid date"),
     }
 }
+
+pub fn generate_lucky_numbers(sign: ZodiacSign) -> Vec<u8> {
+    let mut rng = rand::thread_rng();
+    
+    let base_numbers = match sign {
+        ZodiacSign::Aries => vec![1, 9, 17, 25, 33],
+        ZodiacSign::Taurus => vec![2, 6, 14, 22, 30],
+        ZodiacSign::Gemini => vec![3, 12, 21, 39, 48],
+        ZodiacSign::Cancer => vec![2, 7, 11, 16, 20],
+        ZodiacSign::Leo => vec![1, 3, 10, 19, 28],
+        ZodiacSign::Virgo => vec![3, 15, 27, 35, 51],
+        ZodiacSign::Libra => vec![6, 15, 24, 33, 42],
+        ZodiacSign::Scorpio => vec![4, 13, 18, 22, 27],
+        ZodiacSign::Sagittarius => vec![9, 18, 27, 36, 45],
+        ZodiacSign::Capricorn => vec![8, 10, 26, 35, 44],
+        ZodiacSign::Aquarius => vec![4, 8, 13, 17, 22],
+        ZodiacSign::Pisces => vec![7, 12, 16, 21, 25],
+    };
+    
+    let mut lucky_numbers = base_numbers;
+    for num in lucky_numbers.iter_mut() {
+        *num = (*num + rng.gen_range(0..5)) % 50 + 1;
+    }
+    
+    lucky_numbers
+}
+
+pub fn generate_lucky_colors(sign: ZodiacSign) -> Vec<&'static str> {
+    let mut rng = rand::thread_rng();
+    
+    let colors = match sign {
+        ZodiacSign::Aries => vec!["Red", "Orange", "Crimson", "Scarlet"],
+        ZodiacSign::Taurus => vec!["Green", "Pink", "Emerald", "Rose Gold"],
+        ZodiacSign::Gemini => vec!["Yellow", "Silver", "Bright Blue", "Turquoise"],
+        ZodiacSign::Cancer => vec!["White", "Silver", "Sea Blue", "Moonstone"],
+        ZodiacSign::Leo => vec!["Gold", "Orange", "Yellow", "Amber"],
+        ZodiacSign::Virgo => vec!["Navy Blue", "Brown", "Forest Green", "Beige"],
+        ZodiacSign::Libra => vec!["Blue", "Pink", "Lavender", "Pastel Green"],
+        ZodiacSign::Scorpio => vec!["Deep Red", "Black", "Maroon", "Dark Purple"],
+        ZodiacSign::Sagittarius => vec!["Purple", "Turquoise", "Royal Blue", "Violet"],
+        ZodiacSign::Capricorn => vec!["Black", "Brown", "Dark Green", "Grey"],
+        ZodiacSign::Aquarius => vec!["Electric Blue", "Silver", "Aqua", "Neon Green"],
+        ZodiacSign::Pisces => vec!["Sea Green", "Lavender", "Aquamarine", "Soft Blue"],
+    };
+    
+    let mut selected = vec![];
+    let num_colors = rng.gen_range(2..=3);
+    let mut available_colors = colors;
+    
+    for _ in 0..num_colors {
+        if !available_colors.is_empty() {
+            let idx = rng.gen_range(0..available_colors.len());
+            selected.push(available_colors.remove(idx));
+        }
+    }
+    
+    selected
+}
+
