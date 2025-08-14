@@ -64,10 +64,10 @@ pub fn get_zodiac_ascii_art(sign: ZodiacSign) -> &'static str {
          \
     SAGITTARIUS"#,
         ZodiacSign::Capricorn => r#"      /^\
-     /   \
-    | (o) |
-    |  v  |
- /~\_|   |_/~\
+     /♡ ♡\
+    | (◉) |
+    |  ω  |
+ /~\_| ~ |_/~\
 (   CAPRI-   )
  \_CORN___/"#,
         ZodiacSign::Aquarius => r#"   ~~~~~~
