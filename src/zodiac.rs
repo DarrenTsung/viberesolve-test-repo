@@ -84,7 +84,7 @@ pub fn generate_lucky_numbers(sign: ZodiacSign) -> Vec<u8> {
     lucky_numbers
 }
 
-pub fn generate_lucky_colors(sign: ZodiacSign) -> Vec<&'static str> {
+pub fn generate_lucky_colors(sign: ZodiacSign) -> &'static str {
     let mut rng = rand::thread_rng();
     
     let colors = match sign {
@@ -102,17 +102,7 @@ pub fn generate_lucky_colors(sign: ZodiacSign) -> Vec<&'static str> {
         ZodiacSign::Pisces => vec!["Sea Green", "Lavender", "Aquamarine", "Soft Blue"],
     };
     
-    let mut selected = vec![];
-    let num_colors = rng.gen_range(2..=3);
-    let mut available_colors = colors;
-    
-    for _ in 0..num_colors {
-        if !available_colors.is_empty() {
-            let idx = rng.gen_range(0..available_colors.len());
-            selected.push(available_colors.remove(idx));
-        }
-    }
-    
-    selected
+    let idx = rng.gen_range(0..colors.len());
+    colors[idx]
 }
 

@@ -53,7 +53,7 @@ fn main() {
     if args.verbose {
         eprintln!("[VERBOSE] Generating lucky colors...");
     }
-    let lucky_colors = generate_lucky_colors(zodiac_sign);
+    let lucky_color = generate_lucky_colors(zodiac_sign);
     
     if args.verbose {
         eprintln!("[VERBOSE] Retrieving ASCII art...");
@@ -73,7 +73,7 @@ fn main() {
     println!();
     println!("🍀 LUCKY NUMBERS: {}", 
         lucky_numbers.iter().map(|n| n.to_string()).collect::<Vec<_>>().join(", "));
-    println!("🌈 LUCKY COLORS: {}", lucky_colors.join(", "));
+    println!("🌈 LUCKY COLOR: {}", lucky_color);
     println!();
     println!("✨ May the stars guide your path! ✨");
     
