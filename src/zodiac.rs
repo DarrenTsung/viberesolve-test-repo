@@ -84,7 +84,7 @@ pub fn generate_lucky_numbers(sign: ZodiacSign) -> Vec<u8> {
     lucky_numbers
 }
 
-pub fn generate_lucky_colors(sign: ZodiacSign) -> &'static str {
+pub fn generate_lucky_color(sign: ZodiacSign) -> &'static str {
     let mut rng = rand::thread_rng();
     
     let colors = match sign {

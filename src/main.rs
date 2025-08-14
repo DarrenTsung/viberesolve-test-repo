@@ -6,7 +6,7 @@ mod horoscope;
 mod cli;
 mod ascii_art;
 
-use zodiac::{determine_zodiac_sign, generate_lucky_numbers, generate_lucky_colors};
+use zodiac::{determine_zodiac_sign, generate_lucky_numbers, generate_lucky_color};
 use horoscope::generate_horoscope;
 use cli::Args;
 use ascii_art::get_zodiac_ascii_art;
@@ -53,7 +53,7 @@ fn main() {
     if args.verbose {
         eprintln!("[VERBOSE] Generating lucky colors...");
     }
-    let lucky_color = generate_lucky_colors(zodiac_sign);
+    let lucky_color = generate_lucky_color(zodiac_sign);
     
     if args.verbose {
         eprintln!("[VERBOSE] Retrieving ASCII art...");
