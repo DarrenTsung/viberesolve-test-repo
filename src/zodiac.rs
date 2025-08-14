@@ -37,11 +37,16 @@ impl fmt::Display for ZodiacSign {
     }
 }
 
-pub fn determine_zodiac_sign(birth_date: NaiveDate) -> ZodiacSign {
+pub fn determine_zodiac_sign(birth_date: NaiveDate, verbose: bool) -> ZodiacSign {
     let month = birth_date.month();
     let day = birth_date.day();
+    
+    if verbose {
+        eprintln!("[VERBOSE zodiac.rs] Determining zodiac sign for date: {}", birth_date);
+        eprintln!("[VERBOSE zodiac.rs] Month: {}, Day: {}", month, day);
+    }
 
-    match (month, day) {
+    let sign = match (month, day) {
         (3, 21..=31) | (4, 1..=19) => ZodiacSign::Aries,
         (4, 20..=30) | (5, 1..=20) => ZodiacSign::Taurus,
         (5, 21..=31) | (6, 1..=20) => ZodiacSign::Gemini,
@@ -55,10 +60,20 @@ pub fn determine_zodiac_sign(birth_date: NaiveDate) -> ZodiacSign {
         (1, 20..=31) | (2, 1..=18) => ZodiacSign::Aquarius,
         (2, 19..=29) | (3, 1..=20) => ZodiacSign::Pisces,
         _ => unreachable!("Invalid date"),
+    };
+    
+    if verbose {
+        eprintln!("[VERBOSE zodiac.rs] Zodiac sign determined: {}", sign);
     }
+    
+    sign
 }
 
-pub fn generate_lucky_numbers(sign: ZodiacSign) -> Vec<u8> {
+pub fn generate_lucky_numbers(sign: ZodiacSign, verbose: bool) -> Vec<u8> {
+    if verbose {
+        eprintln!("[VERBOSE zodiac.rs] Generating lucky numbers for {}", sign);
+    }
+    
     let mut rng = rand::thread_rng();
     
     let base_numbers = match sign {
@@ -76,15 +91,31 @@ pub fn generate_lucky_numbers(sign: ZodiacSign) -> Vec<u8> {
         ZodiacSign::Pisces => vec![7, 12, 16, 21, 25],
     };
     
+    if verbose {
+        eprintln!("[VERBOSE zodiac.rs] Base numbers selected: {:?}", base_numbers);
+    }
+    
     let mut lucky_numbers = base_numbers;
-    for num in lucky_numbers.iter_mut() {
+    for (i, num) in lucky_numbers.iter_mut().enumerate() {
+        let original = *num;
         *num = (*num + rng.gen_range(0..5)) % 50 + 1;
+        if verbose {
+            eprintln!("[VERBOSE zodiac.rs] Lucky number {}: {} -> {}", i + 1, original, *num);
+        }
+    }
+    
+    if verbose {
+        eprintln!("[VERBOSE zodiac.rs] Final lucky numbers: {:?}", lucky_numbers);
     }
     
     lucky_numbers
 }
 
-pub fn generate_lucky_colors(sign: ZodiacSign) -> Vec<&'static str> {
+pub fn generate_lucky_colors(sign: ZodiacSign, verbose: bool) -> Vec<&'static str> {
+    if verbose {
+        eprintln!("[VERBOSE zodiac.rs] Generating lucky colors for {}", sign);
+    }
+    
     let mut rng = rand::thread_rng();
     
     let colors = match sign {
@@ -102,15 +133,31 @@ pub fn generate_lucky_colors(sign: ZodiacSign) -> Vec<&'static str> {
         ZodiacSign::Pisces => vec!["Sea Green", "Lavender", "Aquamarine", "Soft Blue"],
     };
     
+    if verbose {
+        eprintln!("[VERBOSE zodiac.rs] Available colors for {}: {:?}", sign, colors);
+    }
+    
     let mut selected = vec![];
     let num_colors = rng.gen_range(2..=3);
+    if verbose {
+        eprintln!("[VERBOSE zodiac.rs] Selecting {} colors", num_colors);
+    }
+    
     let mut available_colors = colors;
     
-    for _ in 0..num_colors {
+    for i in 0..num_colors {
         if !available_colors.is_empty() {
             let idx = rng.gen_range(0..available_colors.len());
-            selected.push(available_colors.remove(idx));
+            let color = available_colors.remove(idx);
+            if verbose {
+                eprintln!("[VERBOSE zodiac.rs] Color {}: selected '{}'", i + 1, color);
+            }
+            selected.push(color);
         }
+    }
+    
+    if verbose {
+        eprintln!("[VERBOSE zodiac.rs] Final lucky colors: {:?}", selected);
     }
     
     selected

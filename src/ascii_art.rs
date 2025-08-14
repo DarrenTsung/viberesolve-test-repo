@@ -1,7 +1,11 @@
 use crate::zodiac::ZodiacSign;
 
-pub fn get_zodiac_ascii_art(sign: ZodiacSign) -> &'static str {
-    match sign {
+pub fn get_zodiac_ascii_art(sign: ZodiacSign, verbose: bool) -> &'static str {
+    if verbose {
+        eprintln!("[VERBOSE ascii_art.rs] Retrieving ASCII art for {}", sign);
+    }
+    
+    let art = match sign {
         ZodiacSign::Aries => r#"    /|   /|  
    (  @v@  )
     |  _  |
@@ -81,5 +85,13 @@ pub fn get_zodiac_ascii_art(sign: ZodiacSign) -> &'static str {
   < (o) >< (o) >
    \___/    \___/
      PISCES"#,
+    };
+    
+    if verbose {
+        eprintln!("[VERBOSE ascii_art.rs] ASCII art retrieved successfully");
+        let lines_count = art.lines().count();
+        eprintln!("[VERBOSE ascii_art.rs] Art contains {} lines", lines_count);
     }
+    
+    art
 }

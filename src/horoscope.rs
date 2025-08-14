@@ -1,8 +1,15 @@
 use rand::Rng;
 use crate::zodiac::ZodiacSign;
 
-pub fn generate_horoscope(sign: ZodiacSign) -> String {
+pub fn generate_horoscope(sign: ZodiacSign, verbose: bool) -> String {
+    if verbose {
+        eprintln!("[VERBOSE horoscope.rs] Generating horoscope for sign: {}", sign);
+    }
+    
     let mut rng = rand::thread_rng();
+    if verbose {
+        eprintln!("[VERBOSE horoscope.rs] Random number generator initialized");
+    }
     
     let predictions = match sign {
         ZodiacSign::Aries => vec![
@@ -91,5 +98,20 @@ pub fn generate_horoscope(sign: ZodiacSign) -> String {
         ],
     };
     
-    predictions[rng.gen_range(0..predictions.len())].to_string()
+    if verbose {
+        eprintln!("[VERBOSE horoscope.rs] Found {} predictions for {}", predictions.len(), sign);
+    }
+    
+    let selected_index = rng.gen_range(0..predictions.len());
+    if verbose {
+        eprintln!("[VERBOSE horoscope.rs] Selected prediction index: {}", selected_index);
+    }
+    
+    let selected_prediction = predictions[selected_index].to_string();
+    if verbose {
+        eprintln!("[VERBOSE horoscope.rs] Prediction selected successfully");
+        eprintln!("[VERBOSE horoscope.rs] Prediction length: {} characters", selected_prediction.len());
+    }
+    
+    selected_prediction
 }
