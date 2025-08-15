@@ -78,7 +78,7 @@ pub fn generate_lucky_numbers(sign: ZodiacSign) -> Vec<u8> {
     
     let mut lucky_numbers = base_numbers;
     for num in lucky_numbers.iter_mut() {
-        // Add random variation (0-4) to each base number and wrap within 1-50 range
+        // Add random variation and wrap to 1-50
         *num = (*num + rng.gen_range(0..5)) % 50 + 1;
     }
     
